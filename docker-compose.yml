@@ -1,0 +1,133 @@
+services:
+    db:
+        container_name: gramline-database
+        image: postgres:12.0-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_DB=${DATABASE_NAME}
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+        restart: always
+        networks:
+            - back_network
+
+    redis:
+        container_name: gramline-redis
+        image: redis:alpine
+        restart: always
+        networks:
+            - back_network
+
+    back:
+        image: gramline-backend
+        container_name: gramline-back
+        working_dir: /usr/src/app/
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/usr/src/app/
+            - back-static:/usr/src/app/allstaticfiles
+            - back-media:/usr/src/app/media
+        ports:
+            - 8000:8000
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "3"
+        depends_on:
+            - db
+        restart: always
+        networks:
+            - back_network
+
+    celery:
+        image: gramline-backend
+        container_name: gramline-celery
+        working_dir: /usr/src/app/
+        command: celery -A website worker -l info -c 2
+        volumes:
+            - .:/usr/src/app/
+            - back-static:/usr/src/app/allstaticfiles
+            - back-media:/usr/src/app/media
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        healthcheck:
+            test: ["CMD", "celery", "-A", "website", "inspect", "ping"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 30s
+        depends_on:
+            - db
+            - redis
+        restart: always
+        networks:
+            - back_network
+
+    celery-beat:
+        image: gramline-backend
+        container_name: gramline-celery-beat
+        command: celery -A website beat -l error
+        volumes:
+            - .:/usr/src/app/
+            - back-static:/usr/src/app/allstaticfiles
+            - back-media:/usr/src/app/media
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        depends_on:
+            - db
+            - redis
+            - celery
+        restart: always
+        networks:
+            - back_network
+
+networks:
+    back_network:
+        driver: bridge
+
+volumes:
+    postgres_data:
+    back-static:
+    back-media:

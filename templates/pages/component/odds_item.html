@@ -1,0 +1,43 @@
+{% load static compress %}
+{% load i18n %}
+{% for odds in match.odds.all %}
+        <div class="category-item__expanded-item">
+            <div class="category-item__expanded-item__left">
+                <div class="category-item__container__star">
+                    <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.80562 1.97494C9.04561 1.34197 9.95382
+                                                1.34197 10.1946 1.97494L11.747 6.27525C11.8011
+                                                6.41534 11.8965 6.5357 12.0205 6.62046C12.1445
+                                                6.70521 12.2913 6.75038 12.4415
+                                                6.74998H16.2565C16.9615 6.74998 17.269 7.62744
+                                                16.7148 8.05717L13.9999 10.4998C13.8783 10.5933
+                                                13.7894 10.7229 13.746 10.87C13.7026 11.0172
+                                                13.707 11.1743 13.7584 11.3188L14.7499
+                                                15.5208C14.9913 16.1958 14.2099 16.7755 13.6189
+                                                16.3601L9.93132 14.0202C9.80504 13.9314 9.65444
+                                                13.8838 9.50009 13.8838C9.34574 13.8838 9.19514
+                                                13.9314 9.06886 14.0202L5.38127 16.3601C4.79105
+                                                16.7755 4.00883 16.1951 4.25032 15.5208L5.24178
+                                                11.3188C5.29321 11.1743 5.29755 11.0172 5.25416
+                                                10.87C5.21078 10.7229 5.1219 10.5933 5.00029
+                                                10.4998L2.28541 8.05717C1.73044 7.62744 2.03942
+                                                6.74998 2.74289 6.74998H6.55797C6.70818 6.75048
+                                                6.85501 6.70536 6.97902 6.62059C7.10302 6.53582
+                                                7.19837 6.4154 7.25244 6.27525L8.80562 1.97494Z" stroke="#C4C4C4"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <p class="category-item__expanded-item__title">{{ odds.name }}</p>
+            </div>
+            <div class="category-item__expanded-item__right">
+                {% for odds_detail in odds.odds_detail.all %}
+                    <div class="koef-with-title master-login-open">
+                        <p> {{ odds_detail.name }}</p>
+                        <div class="koef-container" data-id="{{ match.id }}" data-team="{{ match.home_team.title }}" data-match="{{ match.home_team.title }} vs {{ match.away_team.title }}" data-koef="{{  odds_detail.value }}" data-betType="{{ odds.name }}">
+                             {{ odds_detail.value }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endfor %}

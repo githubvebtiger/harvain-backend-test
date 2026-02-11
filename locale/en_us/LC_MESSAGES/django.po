@@ -1,0 +1,529 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-17 10:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: football/views.py:33 templates/layout/menu.html:21
+#: templates/layout/sidebar.html:17
+msgid "Football"
+msgstr "Football"
+
+#: football/views.py:55 templates/layout/menu.html:45
+#: templates/layout/sidebar.html:36
+msgid "Baseball"
+msgstr "Baseball"
+
+#: football/views.py:77
+msgid "BasketBall"
+msgstr "BasketBall"
+
+#: football/views.py:99 templates/layout/menu.html:90
+#: templates/layout/sidebar.html:73
+msgid "Formula 1"
+msgstr "Formula 1"
+
+#: football/views.py:121 templates/layout/menu.html:123
+#: templates/layout/sidebar.html:95
+msgid "Handball"
+msgstr "Handball"
+
+#: football/views.py:143 templates/layout/menu.html:159
+#: templates/layout/sidebar.html:118
+msgid "Hockey"
+msgstr "Hockey"
+
+#: football/views.py:165 templates/layout/menu.html:183
+#: templates/layout/sidebar.html:137
+msgid "Rugby"
+msgstr "Rugby"
+
+#: football/views.py:187 templates/layout/menu.html:207
+#: templates/layout/sidebar.html:156
+msgid "Volleyball"
+msgstr "Volleyball"
+
+#: templates/base.html:55 templates/pages/news/index.html:7
+msgid "news"
+msgstr "news"
+
+#: templates/base.html:112 templates/client_base.html:82
+#: templates/satellite_base.html:82
+msgid "Register and collect your gift!"
+msgstr "Register and collect your gift!"
+
+#: templates/base.html:120 templates/client_base.html:90
+#: templates/satellite_base.html:90
+msgid "For satellites"
+msgstr "For satellites"
+
+#: templates/base.html:120 templates/client_base.html:90
+#: templates/satellite_base.html:90
+msgid "bonus for first bet up to"
+msgstr "bonus for first bet up to"
+
+#: templates/base.html:120 templates/client_base.html:90
+#: templates/satellite_base.html:90
+msgid "and"
+msgstr "and"
+
+#: templates/base.html:120 templates/client_base.html:90
+#: templates/satellite_base.html:90
+msgid "bonus for first bet over"
+msgstr "bonus for first bet over"
+
+#: templates/base.html:128 templates/client_base.html:98
+#: templates/satellite_base.html:98
+#, fuzzy
+#| msgid "Master account"
+msgid "For master account"
+msgstr "Master account"
+
+#: templates/base.html:128 templates/client_base.html:98
+#: templates/satellite_base.html:98
+msgid "bonus"
+msgstr "bonus"
+
+#: templates/base.html:140 templates/base.html:165
+#: templates/client_base.html:110 templates/client_base.html:135
+#: templates/layout/header.html:90 templates/layout/menu.html:248
+#: templates/satellite_base.html:110 templates/satellite_base.html:135
+msgid "Register"
+msgstr "Register"
+
+#: templates/base.html:143 templates/base.html:179
+#: templates/client_base.html:113 templates/client_base.html:149
+#: templates/pages/satellites.html:55 templates/satellite_base.html:113
+#: templates/satellite_base.html:149
+msgid "One of the fields is incorrect"
+msgstr "One of the fields is incorrect"
+
+#: templates/base.html:176 templates/base.html:190
+#: templates/client_base.html:146 templates/client_base.html:160
+#: templates/layout/header.html:76 templates/layout/menu.html:235
+#: templates/pages/satellites.html:41 templates/pages/satellites.html:52
+#: templates/pages/satellites.html:65 templates/satellite_base.html:146
+#: templates/satellite_base.html:160
+msgid "Log in"
+msgstr "Log in"
+
+#: templates/base.html:193
+msgid "Forgot? Reset password"
+msgstr ""
+
+#: templates/base.html:196
+msgid "Contact support to reset your password."
+msgstr ""
+
+#: templates/base.html:213
+msgid "Require a licence"
+msgstr ""
+
+#: templates/base.html:237
+msgid "Calculator"
+msgstr ""
+
+#: templates/layout/client/header.html:33 templates/layout/header.html:38
+#: templates/layout/menu.html:226
+msgid "my cabinet"
+msgstr "my cabinet"
+
+#: templates/layout/client/header.html:37
+#: templates/layout/client/header.html:65 templates/layout/header.html:42
+#: templates/layout/header.html:100 templates/layout/menu.html:230
+#: templates/layout/menu.html:258
+msgid "logout"
+msgstr "logout"
+
+#: templates/layout/client/header.html:71 templates/layout/header.html:114
+#: templates/layout/menu.html:255 templates/layout/satellite/header.html:47
+msgid "go to main page"
+msgstr "go to main page"
+
+#: templates/layout/footer.html:10
+msgid "Contact us"
+msgstr ""
+
+#: templates/layout/footer.html:19
+msgid "Support"
+msgstr "sports"
+
+#: templates/layout/footer.html:30
+msgid "Callback"
+msgstr ""
+
+#: templates/layout/footer.html:35
+msgid "Submit"
+msgstr ""
+
+#: templates/layout/footer.html:38
+msgid "Enter the number that is linked to your master account"
+msgstr ""
+
+#: templates/layout/footer.html:49
+msgid "Address"
+msgstr ""
+
+#: templates/layout/footer.html:75
+msgid "Easy deposits"
+msgstr ""
+
+#: templates/layout/footer.html:78
+msgid ""
+"The highest credit card acceptance rate in the industry means you get your "
+"account funded safely and easily."
+msgstr ""
+
+#: templates/layout/footer.html:84
+msgid "Rewards system"
+msgstr ""
+
+#: templates/layout/footer.html:87
+msgid ""
+"Free Bets where your winnings are paid in real cash (no rollover "
+"requirements), matched bonus bets, great promotions and some of the world's "
+"most exclusive offers. No one gives away more free cash than we do."
+msgstr ""
+
+#: templates/layout/footer.html:93
+msgid "Bonus system"
+msgstr ""
+
+#: templates/layout/footer.html:96
+msgid ""
+"The best bonus system of its kind, which allows you to instantly get a bonus "
+"on your account"
+msgstr ""
+
+#: templates/layout/footer.html:102
+msgid "The most odds"
+msgstr ""
+
+#: templates/layout/footer.html:105
+msgid ""
+"We give our members the most ways to win with futures odds, hundreds of prop "
+"betting options on all the big games every day and more than 300 on the "
+"Super Bowl every year."
+msgstr ""
+
+#: templates/layout/footer.html:111
+#, fuzzy
+#| msgid "Customer service"
+msgid "24/7 Customer Service"
+msgstr "Customer service"
+
+#: templates/layout/footer.html:114
+msgid ""
+"Dedicated, friendly, knowledgeable, and helpful staff are here whenever you "
+"need them."
+msgstr ""
+
+#: templates/layout/footer.html:120
+msgid "One-stop shopping"
+msgstr ""
+
+#: templates/layout/footer.html:123
+msgid ""
+"Access to sports betting, mobile and live betting - all from one convenient "
+"account."
+msgstr ""
+
+#: templates/layout/footer.html:128
+#, fuzzy
+#| msgid "Payment System"
+msgid "Payment systems"
+msgstr "Payment System"
+
+#: templates/layout/footer.html:148
+msgid "OUR LICENCE"
+msgstr ""
+
+#: templates/layout/footer.html:149
+msgid ""
+"Customers in the United States: Gramline is licensed and regulated by the "
+"Gambling Commission (license #98516). All other customers: Gramline is "
+"licensed and regulated by the Arizona Department of Gaming."
+msgstr ""
+
+#: templates/layout/footer.html:152
+msgid "PRIVACY POLICY"
+msgstr ""
+
+#: templates/layout/footer.html:153
+msgid ""
+"We use cookies and third-party cookies to improve our services; analyze and "
+"personalize your preferences and to show you advertisements.If you continue "
+"the navigation, we consider that you are accepting its use.You can modify "
+"the settings and obtain further information in our Cookie Notice."
+msgstr ""
+
+#: templates/layout/footer.html:156
+msgid "CONTACT US"
+msgstr ""
+
+#: templates/layout/footer.html:158
+msgid "Gramline all rights reserved"
+msgstr ""
+
+#: templates/layout/header.html:83 templates/layout/menu.html:242
+msgid "Master account"
+msgstr "Master account"
+
+#: templates/layout/header.html:84 templates/layout/menu.html:243
+msgid "Satellite account"
+msgstr "Satellite account"
+
+#: templates/layout/menu.html:8 templates/layout/sidebar.html:5
+msgid "sports"
+msgstr "sports"
+
+#: templates/layout/menu.html:27 templates/layout/menu.html:51
+#: templates/layout/menu.html:72 templates/layout/menu.html:96
+#: templates/layout/menu.html:129 templates/layout/menu.html:165
+#: templates/layout/menu.html:189 templates/layout/menu.html:213
+#: templates/layout/sidebar.html:23 templates/layout/sidebar.html:42
+#: templates/layout/sidebar.html:60 templates/layout/sidebar.html:79
+#: templates/layout/sidebar.html:101 templates/layout/sidebar.html:124
+#: templates/layout/sidebar.html:143 templates/layout/sidebar.html:162
+msgid "There are currently no events in this section."
+msgstr "There are currently no events in this section."
+
+#: templates/layout/menu.html:66 templates/layout/sidebar.html:54
+msgid "Basketball"
+msgstr "BasketBall"
+
+#: templates/layout/menu.html:220
+msgid "Auth"
+msgstr ""
+
+#: templates/layout/menu.html:264
+msgid "Languages"
+msgstr ""
+
+#: templates/layout/satellite/header.html:16
+msgid "Blocked balance"
+msgstr "Blocked balance"
+
+#: templates/layout/satellite/header.html:19
+msgid "Balance"
+msgstr "Balance"
+
+#: templates/layout/satellite/sidebar.html:5
+msgid "main"
+msgstr "main"
+
+#: templates/layout/satellite/sidebar.html:14
+msgid "Notifications"
+msgstr "Notifications"
+
+#: templates/layout/satellite/sidebar.html:35
+#: templates/layout/satellite/sidebar.html:152
+msgid "Refill"
+msgstr "Refill"
+
+#: templates/layout/satellite/sidebar.html:48
+#: templates/layout/satellite/sidebar.html:165
+msgid "Withdraw"
+msgstr "Withdraw"
+
+#: templates/layout/satellite/sidebar.html:60
+msgid "Payments"
+msgstr "Payment methods"
+
+#: templates/layout/satellite/sidebar.html:69
+msgid "bets"
+msgstr "bets"
+
+#: templates/layout/satellite/sidebar.html:88
+msgid "In Progress"
+msgstr "In Progress"
+
+#: templates/layout/satellite/sidebar.html:106
+msgid "Wins"
+msgstr "Wins"
+
+#: templates/layout/satellite/sidebar.html:123
+msgid "Losses"
+msgstr "Losses"
+
+#: templates/layout/satellite/sidebar.html:131
+msgid "Transaction history"
+msgstr "Transaction history"
+
+#: templates/layout/satellite/sidebar.html:173
+msgid "settings"
+msgstr "settings"
+
+#: templates/layout/satellite/sidebar.html:191
+msgid "Settings"
+msgstr "Settings"
+
+#: templates/layout/satellite/sidebar.html:210
+msgid "Change password"
+msgstr "Change password"
+
+#: templates/layout/satellite/sidebar.html:221
+msgid "Notification settings"
+msgstr "Notification settings"
+
+#: templates/layout/sidebar.html:170
+msgid "MATCH OF THE DAY"
+msgstr "MATCH OF THE DAY"
+
+#: templates/layout/sidebar.html:208
+msgid "Bet Slip"
+msgstr "Bet Slip"
+
+#: templates/layout/sidebar.html:209
+msgid "My Bets"
+msgstr "My Bets"
+
+#: templates/layout/sidebar.html:214
+msgid "No bets selected!"
+msgstr "No bets selected!"
+
+#: templates/layout/sidebar.html:217
+msgid "Please browse our sportsbook and select bets by tapping on the odds"
+msgstr "Please browse our sportsbook and select bets by tapping on the odds"
+
+#: templates/pages/bets/index.html:6 templates/pages/bets/index.html:19
+msgid "Number"
+msgstr "Number"
+
+#: templates/pages/bets/index.html:7 templates/pages/bets/index.html:23
+#: templates/pages/bets/index.html:88 templates/pages/transactions/index.html:6
+#: templates/pages/transactions/index.html:16
+msgid "Date"
+msgstr "Date"
+
+#: templates/pages/bets/index.html:8 templates/pages/bets/index.html:27
+msgid "Type"
+msgstr "Type"
+
+#: templates/pages/bets/index.html:9 templates/pages/bets/index.html:31
+msgid "Odds"
+msgstr "Odds"
+
+#: templates/pages/bets/index.html:10 templates/pages/bets/index.html:35
+msgid "Stake"
+msgstr "Stake"
+
+#: templates/pages/bets/index.html:11 templates/pages/bets/index.html:39
+#: templates/pages/bets/index.html:104
+msgid "Result"
+msgstr "Result"
+
+#: templates/pages/bets/index.html:12
+msgid "Commision"
+msgstr "Commission"
+
+#: templates/pages/bets/index.html:51
+msgid "Commission"
+msgstr "Commission"
+
+#: templates/pages/bets/index.html:69
+msgid "More about"
+msgstr "More about"
+
+#: templates/pages/bets/index.html:69
+msgid "event"
+msgstr "event"
+
+#: templates/pages/bets/index.html:72
+msgid "Sport"
+msgstr "sport"
+
+#: templates/pages/bets/index.html:76
+msgid "Country"
+msgstr "Country"
+
+#: templates/pages/bets/index.html:80
+msgid "League"
+msgstr "League"
+
+#: templates/pages/bets/index.html:84
+msgid "Event"
+msgstr "Event"
+
+#: templates/pages/bets/index.html:92
+msgid "Bet"
+msgstr "Bet"
+
+#: templates/pages/bets/index.html:96
+msgid "Bet On"
+msgstr "Bet On"
+
+#: templates/pages/bets/index.html:100
+msgid "Rate"
+msgstr "Rate"
+
+#: templates/pages/satellites.html:77
+msgid "Your account has been blocked. Please contact technical support"
+msgstr "Your account has been blocked. Please contact technical support"
+
+#: templates/pages/satellites.html:80
+msgid "Close"
+msgstr "Close"
+
+#: templates/pages/transactions/index.html:7
+#: templates/pages/transactions/index.html:20
+msgid "Sum"
+msgstr "Sum"
+
+#: templates/pages/transactions/index.html:8
+#: templates/pages/transactions/index.html:24
+msgid "Payment System"
+msgstr "Payment System"
+
+#: templates/pages/transactions/index.html:9
+#: templates/pages/transactions/index.html:28
+msgid "Status"
+msgstr "Status"
+
+#: templates/pages/transactions/index.html:10
+#: templates/pages/transactions/index.html:42
+msgid "Comment"
+msgstr "Comment"
+
+#: templates/signup.html:15
+msgid ""
+"Your application will be checked by the moderation of our company.\n"
+"    If the membership is approved, you will be notified by email."
+msgstr ""
+"Your application will be checked by the moderation of our company.\n"
+"    If the membership is approved, you will be notified by email."
+
+#: user/user/managers.py:23
+msgid "You must provide an username address"
+msgstr "You must provide an username address"
+
+#: website/settings/third_party/language.py:6
+msgid "us"
+msgstr "us"
+
+#: website/settings/third_party/language.py:7
+msgid "es"
+msgstr "es"
+
+#: website/settings/third_party/language.py:8
+msgid "fr"
+msgstr "fr"
+
+#~ msgid "Technical support"
+#~ msgstr "Technical support"
+
+#~ msgid "Payment methods"
+#~ msgstr "Payment methods"

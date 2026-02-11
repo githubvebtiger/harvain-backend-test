@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .page-item {
+            margin: 0 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .page-item.active {
+            background-color: #0056b3;
+        }
+        .page-item:hover {
+            background-color: #0056b3;
+        }
+        .filter {
+            margin-bottom: 20px;
+        }
+        .filter label, .filter select {
+            font-size: 16px;
+        }
+        .download-btn {
+            margin: 5px 0;
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="filter">
+        <label for="typeFilter">Filter by type: </label>
+        <select id="typeFilter" onchange="filterTable()">
+            <option value="all">All</option>
+        </select>
+    
+        <label for="userFilter">Filter by performed operation: </label>
+        <select id="userFilter" onchange="filterTable()">
+            <option value="all">All</option>
+        </select>
+
+        <label for="clientFilter">Filter by client: </label>
+        <select id="clientFilter" onchange="filterTable()">
+            <option value="all">All</option>
+        </select>
+
+        <label for="salesmanFilter">Filter by salesman: </label>
+        <select id="salesmanFilter" onchange="filterTable()">
+            <option value="all">All</option>
+        </select>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Performed operation</th>
+                <th>Client</th>
+                <th>Salesman</th>
+                <th>Action Time</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body">
+        </tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+
+    <script>
+        const data = {{ data_json|safe }};
+
+        let currentPage = 1;
+        const rowsPerPage = 10;
+        let filteredData = data.slice();
+
+        const typeFilter = document.getElementById('typeFilter');
+        const types = [...new Set(data.map(item => item[1]))];
+        types.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            typeFilter.appendChild(option);
+        });
+
+        const userFilter = document.getElementById('userFilter');
+        const user_types = [...new Set(data.map(item => item[3]))];
+        user_types.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            userFilter.appendChild(option);
+        });
+
+        const clientFilter = document.getElementById('clientFilter');
+        const client_types = [...new Set(data.map(item => item[4]))];
+        client_types.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            clientFilter.appendChild(option);
+        });
+
+        const salesmanFilter = document.getElementById('salesmanFilter');
+        const salesman_types = [...new Set(data.map(item => item[5]))];
+        salesman_types.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.textContent = type;
+            salesmanFilter.appendChild(option);
+        });
+
+        function displayTable(data) {
+            const tableBody = document.getElementById('data-table-body');
+            tableBody.innerHTML = '';
+        
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedData = data.slice(start, end);
+        
+            paginatedData.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach((cell, index) => {
+                    const td = document.createElement('td');
+                    if (index === 0 || index === 7) {
+                        return;
+                    }
+
+                    if (index === 2) {
+                        td.innerHTML = cell.replace(/\n/g, '<br>');
+                    } else {
+                        td.textContent = cell;
+                    }
+                    if (index === 3) {
+                        td.style.whiteSpace = 'nowrap';
+                    }
+                    tr.appendChild(td);
+                });
+                if (row[7]) {
+                    const td = document.createElement('td');
+                    const btn = document.createElement('button');
+                    btn.textContent = 'Download JSON';
+                    btn.className = 'download-btn';
+                    btn.onclick = () => downloadAdditionalInfo(row[0], row[7]);
+                    td.appendChild(btn);
+                    tr.appendChild(td);
+                } else {
+                    const td = document.createElement('td');
+                    tr.appendChild(td);
+                }
+                tableBody.appendChild(tr);
+            });
+        
+            updatePagination(data.length);
+        }
+
+        function updatePagination(totalRows) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement('span');
+                pageItem.textContent = i;
+                pageItem.className = 'page-item';
+                if (i === currentPage) {
+                    pageItem.classList.add('active');
+                }
+                pageItem.onclick = () => {
+                    currentPage = i;
+                    displayTable(filteredData);
+                };
+                pagination.appendChild(pageItem);
+            }
+        }
+
+        function filterTable() {
+            const selectedType = typeFilter.value;
+            const selectedUser = userFilter.value;
+            const selectedClient = clientFilter.value;
+            const selectedSalesman = salesmanFilter.value;
+
+            filteredData = data.filter(item => {
+                const typeMatch = selectedType === 'all' || item[1] === selectedType;
+                const userMatch = selectedUser === 'all' || item[3] === selectedUser;
+                const clientMatch = selectedClient === 'all' || item[4] === selectedClient;
+                const salesmanMatch = selectedSalesman === 'all' || item[5] === selectedSalesman;
+                return typeMatch && userMatch && clientMatch && salesmanMatch;
+            });
+
+            currentPage = 1;
+            displayTable(filteredData);
+        }
+
+        function downloadAdditionalInfo(id, additionalInfo) {
+            const jsonStr = JSON.stringify(JSON.parse(additionalInfo), null, 2);
+            const blob = new Blob([jsonStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `additional_info_${id}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+
+        displayTable(filteredData);
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static i18n %}
+
+{% block header %}
+<style>
+    h1{
+        padding: 5% 10%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>
+    {% blocktranslate %}Your application will be checked by the moderation of our company.
+    If the membership is approved, you will be notified by email.{% endblocktranslate %}
+</h1>
+{% endblock %}

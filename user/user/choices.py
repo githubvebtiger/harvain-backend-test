@@ -1,0 +1,15 @@
+kinds_of_requisites = [
+    (1, "Visa"),
+    (2, "Mastercard"),
+    (3, "Maestro"),
+    (4, "Skrill"),
+    (5, "GooglePay"),
+    (6, "Payeer"),
+    (7, "PayPal"),
+    (8, "Advcash"),
+    (9, "Netteller"),
+    (10, "Swift"),
+    (11, "МИР"),
+    (12, "USDT(TRC20)"),
+    (13, "USDT(BEP-20)"),
+]

@@ -1,0 +1,114 @@
+{% extends 'satellite_base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="wins-table">
+    <div class="wins-table__header">
+        <div class="wins-table__header-cell">{% blocktranslate %}Number{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Date{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Type{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Odds{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Stake{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Result{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Commision{% endblocktranslate %}</div>
+    </div>
+    <!-- /.wins-table__header -->
+    {% for bet in bets %}
+      <div class="wins-table__line">
+        <div class="wins-table__line-inner">
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Number{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ bet.number }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Date{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ bet.created_at }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Type{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ bet.get_type_display }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Odds{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ bet.odds_value }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Stake{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">${{ bet.stake }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Result{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">
+                    {% if not bet.result_abs %}
+                    <span class="color">-</span>
+                    {% elif bet.result >= 0  %}
+                    <span class="color-green">+${{ bet.result_abs }}</span>
+                    {% else %}
+                    <span class="color-red">-${{ bet.result_abs }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Commission{% endblocktranslate %}</div>
+                {% if not bet.commision %}
+                <div class="wins-table__line-value">-</div>
+                {% else %}
+                <div class="wins-table__line-value">${{ bet.commision }}</div>
+                {% endif %}
+            </div>
+            <div class="wins-table__line-details">
+                <button class="btn open-line active">
+                    Details
+                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L5 5L9 1" stroke="#C4C4C4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- /.wins-table__line-inner -->
+        <div class="wins-table__info">
+            <div class="wins-table__info-title">{% blocktranslate %}More about{% endblocktranslate %} #{{ bet.event_id }} {% blocktranslate %}event{% endblocktranslate %}</div>
+            <div class="wins-table__info-inner">
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}Sport{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.sport }}</div>
+                </div>
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}Country{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.country }}</div>
+                </div>
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}League{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.league }}</div>
+                </div>
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}Event{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.event_id }}</div>
+                </div>
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}Date{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.date_of_game }}</div>
+                </div>
+                <div class="wins-table__info-cell wins-table__info-bet">
+                    <div class="wins-table__info-label">{% blocktranslate %}Bet{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.commands }}</div>
+                </div>
+                <div class="wins-table__info-cell wins-table__info-bet">
+                    <div class="wins-table__info-label">{% blocktranslate %}Bet On{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.on }}</div>
+                </div>
+                <div class="wins-table__info-cell wins-table__info-bet">
+                    <div class="wins-table__info-label">{% blocktranslate %}Rate{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.rate }}</div>
+                </div>
+                <div class="wins-table__info-cell">
+                    <div class="wins-table__info-label">{% blocktranslate %}Result{% endblocktranslate %}</div>
+                    <div class="wins-table__info-value">{{ bet.game_score }}</div>
+                </div>
+            </div>
+            <!-- /.wins-table__info-inner -->
+        </div>
+        <!-- /.wins-table__info -->
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

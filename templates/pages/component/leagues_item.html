@@ -1,0 +1,161 @@
+{% load i18n %}
+{% load static compress %}
+{% for league in leagues %}
+<div class="category">
+    <div class="category-header">
+        <div class="category-header__left">
+            <div class="category-header__star">
+                <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.80562 0.974948C8.04561 0.341976 8.95382 0.341976 9.19456 0.974948L10.747 5.27526C10.8011 5.41534 10.8965 5.53571 11.0205 5.62046C11.1445 5.70522 11.2913 5.75038 11.4415 5.74999H15.2565C15.9615 5.74999 16.269 6.62745 15.7148 7.05718L12.9999 9.49982C12.8783 9.59331 12.7894 9.72292 12.746 9.87005C12.7026 10.0172 12.707 10.1743 12.7584 10.3188L13.7499 14.5208C13.9913 15.1958 13.2099 15.7755 12.6189 15.3601L8.93132 13.0202C8.80504 12.9314 8.65444 12.8838 8.50009 12.8838C8.34574 12.8838 8.19514 12.9314 8.06886 13.0202L4.38127 15.3601C3.79105 15.7755 3.00883 15.1951 3.25032 14.5208L4.24178 10.3188C4.29321 10.1743 4.29755 10.0172 4.25416 9.87005C4.21078 9.72292 4.1219 9.59331 4.00029 9.49982L1.28541 7.05718C0.730436 6.62745 1.03942 5.74999 1.74289 5.74999H5.55797C5.70818 5.75049 5.85501 5.70537 5.97902 5.6206C6.10302 5.53583 6.19837 5.4154 6.25244 5.27526L7.80562 0.974948Z"
+                        fill="#E7852A" stroke="#E7852A" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="category-header__name">
+                <div class="category-header__name-flag">
+                    <img src="{{ league.logo }}" alt="UK">
+                </div>
+                <div class="category-header__name-title">
+                    <span class="category-header__name-country">{{ league.country.title }}</span>
+                    <span class="category-header__name-league">{{ league.title }}</span>
+                </div>
+            </div>
+        </div>
+        <!-- /.category-header__left -->
+        <div class="category-header__right">
+            <div class="category-header__num">1</div>
+            <div class="category-header__num">X</div>
+            <div class="category-header__num">2</div>
+        </div>
+        <!-- /.category-header__right -->
+    </div>
+    <!-- /.category-header -->
+    {% for match in league.matches.all %}
+        <div class="category-item">
+            <div class="category-item__container">
+                <div class="category-item__container__info">
+                    <div class="category-item__container__timing">
+                        <span class="category-item__container__timing-time">{{ match.date|date:'H:i' }}</span>
+                        <span class="category-item__container__timing-date">{{ match.date|date:'d/m' }}</span>
+                    </div>
+                    <div class="category-item__container__star">
+                        <svg width="19" height="18" viewBox="0 0 19 18"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M8.80562 1.97494C9.04561 1.34197 9.95382
+                                1.34197 10.1946 1.97494L11.747 6.27525C11.8011
+                                6.41534 11.8965 6.5357 12.0205 6.62046C12.1445
+                                6.70521 12.2913 6.75038 12.4415
+                                6.74998H16.2565C16.9615 6.74998 17.269 7.62744
+                                16.7148 8.05717L13.9999 10.4998C13.8783 10.5933
+                                13.7894 10.7229 13.746 10.87C13.7026 11.0172
+                                13.707 11.1743 13.7584 11.3188L14.7499
+                                15.5208C14.9913 16.1958 14.2099 16.7755 13.6189
+                                16.3601L9.93132 14.0202C9.80504 13.9314 9.65444
+                                13.8838 9.50009 13.8838C9.34574 13.8838 9.19514
+                                13.9314 9.06886 14.0202L5.38127 16.3601C4.79105
+                                16.7755 4.00883 16.1951 4.25032 15.5208L5.24178
+                                11.3188C5.29321 11.1743 5.29755 11.0172 5.25416
+                                10.87C5.21078 10.7229 5.1219 10.5933 5.00029
+                                10.4998L2.28541 8.05717C1.73044 7.62744 2.03942
+                                6.74998 2.74289 6.74998H6.55797C6.70818 6.75048
+                                6.85501 6.70536 6.97902 6.62059C7.10302 6.53582
+                                7.19837 6.4154 7.25244 6.27525L8.80562 1.97494Z"
+                                stroke="#C4C4C4" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                />
+                        </svg>
+                    </div>
+                    <div class="category-item__container__names">
+                        <div class="category-item__container__names-item">
+                            {{ match.home_team.title }}
+                            <p class="score">1</p>
+                        </div>
+                        <div class="category-item__container__names-item">
+                            {{ match.away_team.title }}
+                            <p class="score">2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-item__container__info mobile">
+                    <div class="category-item__container__timing">
+                        <span class="category-item__container__timing-time">{{ match.date|date:'H:i' }}</span>
+                        <span class="category-item__container__timing-date">{{ match.date|date:'d/m' }}</span>
+                    </div>
+                    <div class="wrapper">
+                        <div class="category-item__container__star">
+                            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.80562 1.97494C9.04561 1.34197 9.95382
+                                                                        1.34197 10.1946 1.97494L11.747 6.27525C11.8011
+                                                                        6.41534 11.8965 6.5357 12.0205 6.62046C12.1445
+                                                                        6.70521 12.2913 6.75038 12.4415
+                                                                        6.74998H16.2565C16.9615 6.74998 17.269 7.62744
+                                                                        16.7148 8.05717L13.9999 10.4998C13.8783 10.5933
+                                                                        13.7894 10.7229 13.746 10.87C13.7026 11.0172
+                                                                        13.707 11.1743 13.7584 11.3188L14.7499
+                                                                        15.5208C14.9913 16.1958 14.2099 16.7755 13.6189
+                                                                        16.3601L9.93132 14.0202C9.80504 13.9314 9.65444
+                                                                        13.8838 9.50009 13.8838C9.34574 13.8838 9.19514
+                                                                        13.9314 9.06886 14.0202L5.38127 16.3601C4.79105
+                                                                        16.7755 4.00883 16.1951 4.25032 15.5208L5.24178
+                                                                        11.3188C5.29321 11.1743 5.29755 11.0172 5.25416
+                                                                        10.87C5.21078 10.7229 5.1219 10.5933 5.00029
+                                                                        10.4998L2.28541 8.05717C1.73044 7.62744 2.03942
+                                                                        6.74998 2.74289 6.74998H6.55797C6.70818 6.75048
+                                                                        6.85501 6.70536 6.97902 6.62059C7.10302 6.53582
+                                                                        7.19837 6.4154 7.25244 6.27525L8.80562 1.97494Z" stroke="#C4C4C4"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="category-item__container__names">
+                            <div class="category-item__container__names-item">
+                                {{ match.home_team.title }}
+                                <p class="score">1</p>
+                            </div>
+                            <div class="category-item__container__names-item">
+                                {{ match.away_team.title }}
+                                <p class="score">2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.category-item__info -->
+
+                <div class="category-item__container__action">
+                    <div class="category-item__container__buttons">
+                        <div>
+                            <button class="cat-btn master-login-open" data-id="{{ match.id }}" data-team="{{ match.home_team.title }}" data-match="{{ match.home_team.title }} vs {{ match.away_team.title }}" data-koef="{{ match.main_odds_1 }}" data-betType="Winner">
+                                {{ match.main_odds_1 }}
+                            </button>
+                        </div>
+                        <div>
+                            <button class="cat-btn master-login-open" data-id="{{ match.id }}" data-team="{{ match.home_team.title }}" data-match="{{ match.home_team.title }} vs {{ match.away_team.title }}" data-koef="{% if match.main_odds_2 and  match.main_odds_x %}{{ match.main_odds_x }}{% else %} None {% endif %}" data-betType="Winner">
+                                {% if match.main_odds_2 and  match.main_odds_x %}
+                                    {{ match.main_odds_x }}
+                                {% else %}
+                                   <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 7L1.2 5.83333H10.8L12 7V12.8333L10.8 14H1.2L0 12.8333V7ZM1.2 7V12.8333H10.8V7H1.2ZM9.6 5.83333V3.5C9.6 2.57174 9.22072 1.6815 8.54559 1.02513C7.87045 0.368749 6.95478 0 6 0C5.04522 0 4.12955 0.368749 3.45442 1.02513C2.77928 1.6815 2.4 2.57174 2.4 3.5V5.83333H3.6V3.5C3.6 2.88116 3.85286 2.28767 4.30294 1.85008C4.75303 1.4125 5.36348 1.16667 6 1.16667C6.63652 1.16667 7.24697 1.4125 7.69706 1.85008C8.14714 2.28767 8.4 2.88116 8.4 3.5V5.83333H9.6Z" fill="#C4C4C4"></path>
+                                   </svg>
+                                {% endif %}
+                            </button>
+                        </div>
+                        <div>
+                            <button class="cat-btn master-login-open" data-id="{{ match.id }}" data-team="{{ match.home_team.title }}" data-match="{{ match.home_team.title }} vs {{ match.away_team.title }}" data-koef="{% if match.main_odds_2 %} {{  match.main_odds_2 }} {% else %} {{ match.main_odds_x }} {% endif %}" data-betType="Winner">
+                                {% if match.main_odds_2 %}
+                                     {{ match.main_odds_2 }}
+                                {% else %}
+                                    {{ match.main_odds_x }}
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="expand" id='expand-{{match.id}}'>
+                    </div>
+                </div>
+            </div>
+            <div class="category-item__expanded" id="category-expanded-{{match.id}}">
+                {% include 'pages/component/odds_item.html' %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endfor %}

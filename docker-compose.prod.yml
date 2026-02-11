@@ -1,0 +1,170 @@
+services:
+    db:
+        image: postgres:12.0-alpine
+        container_name: gramline-postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_DB=${DATABASE_NAME}
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+        restart: always
+        networks:
+            - back_network
+        env_file:
+            - ./.env
+
+    redis:
+        image: redis:alpine
+        container_name: gramline-redis
+        restart: always
+        networks:
+            - back_network
+        env_file:
+            - ./.env
+
+    back:
+        image: ghcr.io/githubvebtiger/gramline-backend:latest
+        container_name: gramline-back
+        working_dir: /home/django/web
+        command: gunicorn --bind 0.0.0.0:5000 website.wsgi -w 2
+        volumes:
+            - back-static:/home/django/web/allstaticfiles
+            - back-media:/home/django/web/media
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - DJANGO_SETTINGS_MODULE=website.settings.prod
+            - ALLOWED_HOSTS=${BACKEND_DOMAIN},www.${BACKEND_DOMAIN}
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        depends_on:
+            - db
+            - redis
+        restart: always
+        ports:
+            - '5000-5000'
+        networks:
+            - nginx_network
+            - back_network
+        env_file:
+            - ./.env
+
+    frontend:
+        image: ghcr.io/githubvebtiger/gramline-front:production
+        container_name: gramline-frontend
+        working_dir: /usr/src/app
+        command: node index.js frontend
+        restart: always
+        networks:
+            - nginx_network
+            - back_network
+        env_file:
+            - ./.env
+
+    celery:
+        image: ghcr.io/githubvebtiger/gramline-backend:latest
+        container_name: gramline-celery
+        working_dir: /home/django/web
+        command: celery -A website worker -l error -c 2 -P solo
+        volumes:
+            - back-static:/home/django/web/allstaticfiles
+            - back-media:/home/django/web/media
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - DJANGO_SETTINGS_MODULE=website.settings.prod
+            - ALLOWED_HOSTS=${BACKEND_DOMAIN},www.${BACKEND_DOMAIN}
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        restart: always
+        depends_on:
+            - db
+            - redis
+        networks:
+            - back_network
+        env_file:
+            - ./.env
+
+    celery-beat:
+        image: ghcr.io/githubvebtiger/gramline-backend:latest
+        container_name: gramline-celery-beat
+        working_dir: /home/django/web
+        command: celery -A website beat -l error
+        volumes:
+            - back-static:/home/django/web/allstaticfiles
+            - back-media:/home/django/web/media
+        environment:
+            - DATABASE_NAME=${DATABASE_NAME}
+            - DATABASE_USER=${DATABASE_USER}
+            - DATABASE_HOST=${DATABASE_HOST}
+            - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+            - DATABASE_PORT=${DATABASE_PORT}
+            - ENGINE=django.db.backends.postgresql_psycopg2
+            - DJANGO_SETTINGS_MODULE=website.settings.prod
+            - ALLOWED_HOSTS=${BACKEND_DOMAIN},www.${BACKEND_DOMAIN}
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+            - RAPID_API_HOST=${RAPID_API_HOST}
+            - RAPID_API_KEY=${RAPID_API_KEY}
+            - GOOGLE_CLOUD_TRANSLATE_PROJECT_ID=${GOOGLE_CLOUD_TRANSLATE_PROJECT_ID}
+            - GOOGLE_CLOUD_TRANSLATE_LOCATION=${GOOGLE_CLOUD_TRANSLATE_LOCATION}
+            - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+        depends_on:
+            - db
+            - redis
+        restart: always
+        networks:
+            - back_network
+        env_file:
+            - ./.env
+
+    nginx-proxy:
+        image: jonasal/nginx-certbot:3.0.0-nginx1.21.3
+        container_name: gramline-nginx
+        volumes:
+            - ./nginx/:/etc/nginx/templates:ro
+            - nginx_secrets:/etc/letsencrypt
+            - back-static:/app/allstaticfiles
+            - back-media:/app/media
+        ports:
+            - 80:80
+            - 443:443
+        environment:
+            - ENVSUBST_VARS=BACKEND_DOMAIN
+            - CERTBOT_EMAIL
+            - BACKEND_DOMAIN
+            - FRONTEND_DOMAIN
+        restart: always
+        networks:
+            - nginx_network
+        env_file:
+            - ./.env
+
+volumes:
+    postgres_data:
+    back-static:
+    back-media:
+    nginx_secrets:
+
+networks:
+    nginx_network:
+    back_network:

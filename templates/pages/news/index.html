@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static compress %}
+{% load i18n %}
+
+{% block content %}
+<div class="news-mobile">
+    <div class="block-heading">{% blocktranslate %}news{% endblocktranslate %}</div>
+        <div class="news-inner">
+            <div class="news-picture">
+                {% if rss_news.0 %}
+                    <img src="{{ rss_news.0.image }}" alt="">
+                {% endif %}
+            </div>
+            {% for article in rss_news %}
+                <div class="news-line">
+                    <div class="news-line__date">
+                        <div class="news-line__date-time">{{ article.date|date:'H:i' }}</div>
+                        <div class="news-line__date-day">{{ article.date|date:'d/m' }}</div>
+                    </div>
+                    <a href="{{ article.link }}" target="_blank" class="news-line__link">
+                        <span class="news-line__link-top">{{ article.title }}</span>
+                        <span class="news-line__link-bottom">Europa League match prediction</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+<script>console.log('{{ rss_news }}')</script>

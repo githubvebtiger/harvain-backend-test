@@ -1,0 +1,268 @@
+{% load static compress i18n %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" type="svg" href="/static/img/logo.svg">
+        <link rel="stylesheet" href="{% static 'fonts/NotoSans/stylesheet.css' %}">
+        {% compress css %}
+        <link rel="stylesheet" type="text/x-scss" href="{% static 'sass/main.sass' %}">
+        {% endcompress %}
+        <link rel="stylesheet" href="{% static 'libs/slick/slick.css' %}">
+        <title>Gramline</title>
+        {% block header %}{% endblock %}
+    </head>
+    <body>
+        <div class="page-wrapper">
+            {% include 'layout/header.html' %}
+            <div class="page-bg">
+                <div class="page-bg__slider">
+                    <div class="page-bg__item">
+                        <img src="{% static 'img/bgs/1.jpg' %}" alt="">
+                    </div>
+                    <div class="page-bg__item">
+                        <img src="{% static 'img/bgs/2.jpg' %}" alt="">
+                    </div>
+                    <div class="page-bg__item">
+                        <img src="{% static 'img/bgs/3.jpg' %}" alt="">
+                    </div>
+                    <div class="page-bg__item">
+                        <img src="{% static 'img/bgs/4.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- /.page-bg -->
+            <div class="page-container --w-news">
+                <div class="page-grid">
+                    {% include 'layout/sidebar.html' %}
+                    {% include 'layout/menu.html' %}
+                    <main class="page-main">
+                        {% block content %}{% endblock %}
+                    </main>
+                    <div class="news">
+                        <div class="block-heading">news</div>
+                        <div class="news-inner">
+                            <div class="news-picture">
+                                {% if rss_news.0 %}
+                                <img src="{{ rss_news.0.image }}" alt="">
+                                {% endif %}
+                            </div>
+
+                            {% for article in rss_news %}
+                            <div class="news-line">
+                                <div class="news-line__date">
+                                    <div class="news-line__date-time">{{ article.date|date:'H:i' }}</div>
+                                    <div class="news-line__date-day">{{ article.date|date:'d/m' }}</div>
+                                </div>
+                                <a href="{{ article.link }}" target="_blank" class="news-line__link">
+                                    <span class="news-line__link-top">{{ article.title }}</span>
+                                    <span class="news-line__link-bottom">Europa League match prediction</span>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- /.news-inner -->
+                    </div>
+                    <!-- /.news -->
+                </div>
+            </div>
+            {% include 'layout/footer.html' %}
+        </div>
+
+        {% if not user.is_authenticated %}
+        <div class="modal-wrap gift-modal" id="giftModal">
+            <div class="modal-bg"></div>
+            <div class="modal-window">
+                <div class="modal-window__close">
+                    <span>&times;</span>
+                </div>
+                <div class="gift-window__header">
+                    {% blocktranslate %}Register and collect your gift!{% endblocktranslate %}
+                </div>
+                <div class="gift-window__inner">
+                    <div class="gift-window__item">
+                        <div class="gift-window__item-star">
+                            <img src="{% static 'img/icons/star-red.svg' %}" alt="">
+                        </div>
+                        <div class="gift-window__item-text">
+                            {% blocktranslate %}For satellites{% endblocktranslate %} <span class="color-selected --fw-7">$50</span> {% blocktranslate %}bonus for first bet up to{% endblocktranslate %} <span class="color-selected --fw-7">$500</span> {% blocktranslate %}and{% endblocktranslate %} <span class="color-selected --fw-7">$100</span> {% blocktranslate %}bonus for first bet over{% endblocktranslate %} <span class="color-selected --fw-7">$500</span>
+                        </div>
+                    </div>
+                    <div class="gift-window__item">
+                        <div class="gift-window__item-star">
+                            <img src="{% static 'img/icons/star-yellow.svg' %}" alt="">
+                        </div>
+                        <div class="gift-window__item-text">
+                            {% blocktranslate %}For master account{% endblocktranslate %} <span class="color-yellow --fw-7">$500</span> {% blocktranslate %}bonus{% endblocktranslate %}!
+                        </div>
+                    </div>
+                </div>
+                <!-- /.gift-window__inner -->
+            </div>
+        </div>
+        <!-- /.modal-wrap -->
+        <div class="modal-wrap" id="regModal">
+            <div class="modal-bg"></div>
+            <div class="modal-window">
+                <div class="modal-window__inner">
+                    <div class="modal-window__title">{% blocktranslate %}Register{% endblocktranslate %}</div>
+                    <form class="modal-window__form" id="signup-form" action="sigup" method="POST">
+                        <div class="modal-window__form-error">
+                            {% blocktranslate %}One of the fields is incorrect{% endblocktranslate %}
+                        </div>
+                        {% csrf_token %}
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Name" required="required">
+                        </label>
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Lastname" required="required">
+                        </label>
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Phone number" required="required">
+                        </label>
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Email address" required="required">
+                        </label>
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Country" required="required">
+                        </label>
+                        <label class="input">
+                            <input type="text" class="input__field" placeholder="Invitation code" required="required">
+                        </label>
+                        <button class="primary-btn">
+                            <span>{% blocktranslate %}Register{% endblocktranslate %}</span>
+                        </button>
+                    </form>
+                </div>
+                <!-- /.modal-window__inner -->
+            </div>
+        </div>
+        <div class="modal-wrap" id="loginModal">
+            <div class="modal-bg"></div>
+            <div class="modal-window">
+                <div class="modal-window__inner">
+                    <div class="modal-window__title">{% blocktranslate %}Log in{% endblocktranslate %}</div>
+                    <form class="modal-window__form" id="login-form" action="client/login/" method="POST">
+                        <div class="modal-window__form-error">
+                            {% blocktranslate %}One of the fields is incorrect{% endblocktranslate %}
+                        </div>
+                        {% csrf_token %}
+                        <label class="input">
+                            <input type="text" class="input__field" name="username" placeholder="Username" lang="es">
+                        </label>
+                        <label class="input">
+                            <input type="password" class="input__field" name="password" placeholder="Password" lang="es">
+                        </label>
+                        <input type="hidden" name="login-type" id="login-type" lang="es">
+                        <button type="submit" class="primary-btn">
+                            <span>{% blocktranslate %}Log in{% endblocktranslate %}</span>
+                        </button>
+                    </form>
+                </div>
+                <!-- /.modal-window__inner -->
+            </div>
+        </div>
+        {% endif %}
+        {% block modals %}{% endblock %}
+
+        <script src="{% static 'libs/jquery-3.4.1.min.js' %}"></script>
+        <script src="{% static 'libs/protip.min.js' %}"></script>
+        <script src="{% static 'libs/slick/slick.min.js' %}"></script>
+        {% block scripts %}{% endblock %}
+        <script>
+            const header = $('.header'),
+                  body = $('body'),
+                  pageWrapper = $('.page-wrapper')
+            let lastScroll,
+                isMobile = $(window).innerWidth() < 1018,
+                ticking = false
+
+            const onScroll = (event) => {
+                if (isMobile) {
+                    if((lastScroll - window.scrollY) > 0 && !header.hasClass('is-fixed') && window.scrollY >= 20) {
+                        pageWrapper.addClass('header-fixed')
+                        header.addClass('is-fixed')
+                    } else if ((lastScroll - window.scrollY) <= 0 || window.scrollY < 20) {
+                        pageWrapper.removeClass('header-fixed')
+                        header.removeClass('is-fixed')
+                    }
+                    lastScroll = window.scrollY
+                }
+                ticking = false
+            }
+
+            $('.header-gift__btn').on('click', function () {
+                $('#giftModal').addClass('show')
+            });
+            $('.page-bg__slider').slick({
+                arrows: false,
+                infinite: true,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                draggable: false,
+                fade: true
+            });
+            $('.header__countries').slick({
+                arrows: false,
+                infinite: true,
+                autoplay: true,
+                autoplaySpeed: 5000,
+                draggable: false,
+                adaptiveHeight: true,
+                fade: true,
+                asNavFor: '.page-bg__slider'
+            });
+            $('.modal-window__close').on('click', function () {
+                $('#giftModal').removeClass('show');
+            });
+            $(function(){
+                if (isMobile) {
+                    $('.news').toggleClass('hidden')
+                    $('category-item__container__info').toggleClass('mobile')
+                }
+                else {
+                    $('.news').removeClass('hidden')
+                    $('category-item__container__info').removeClass('mobile')
+                }
+                if (window.location.pathname.includes('news')) $('div[class^="sidebar-"]').addClass('hidden')
+            })
+            $(window).resize(function () {
+                isMobile = $(window).innerWidth() < 1018
+                if (isMobile) {
+                    if ($('.news').hasClass('hidden')) return
+                    else $('.news').addClass('hidden')
+                }
+                else {
+                    $('.news').removeClass('hidden')
+                    header.removeClass('is-fixed')
+                }
+            })
+            $(window).scroll((event) => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => onScroll(event))
+                    ticking = true
+                }
+            });
+            $('.header-burger').on('click', function() {
+                $(this).toggleClass('active')
+                $('.mobile-menu').toggleClass('active')
+                $(document.body).toggleClass('hidden')
+            })
+            $('.mobile-menu__inner-login').on('click', function () {
+                $(this).toggleClass('active')
+                $('.mobile-menu__inner-login__dropdown').toggleClass('active')
+            })
+            $(window).click(function() {
+                $('.a-tooltip__wrapper').hide(200)
+                $('.mobile-menu__tooltip-wrapper').hide(200)
+            });
+            $('.mobile-menu__tooltip').on('click', function (event) {
+                event.stopPropagation();
+                const wrapper = $(this).children('.mobile-menu__tooltip-wrapper')
+                $('.mobile-menu__tooltip-wrapper').not(wrapper).hide(200, () => wrapper.show(300))
+            });
+        </script>
+    </body>
+</html>

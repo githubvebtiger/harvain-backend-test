@@ -1,0 +1,128 @@
+{% extends 'client_base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="balance-table">
+    <div class="balance-table__header">
+        <div class="balance-table__header-cell">Uuid</div>
+        <div class="balance-table__header-cell">Block balance</div>
+        <div class="balance-table__header-cell">Active balance</div>
+        <div class="balance-table__header-cell">Withdrawal</div>
+    </div>
+    {% for satellite in satellites %}
+    <div class="balance-table__line">
+        <div class="balance-table__line-cell balance-table__id">
+            <div class="balance-table__line-label">Uuid</div>
+            <div class="balance-table__line-value">{{ satellite.uuid }}</div>
+        </div>
+        <div class="balance-table__line-cell balance-table__block">
+            <div class="balance-table__line-label">Block balance</div>
+            <div class="balance-table__line-value">
+                <span>${{ satellite.block_balance }}</span>
+                <span class="balance-arr --down"></span>
+            </div>
+        </div>
+        <div class="balance-table__line-separator"></div>
+        <div class="balance-table__line-cell balance-table__active">
+            <div class="balance-table__line-label">Active balance</div>
+            <div class="balance-table__line-value">
+                <span>${{ satellite.active_balance }}</span>
+                <span class="balance-arr --up"></span>
+            </div>
+        </div>
+        <div class="balance-table__line-cell balance-table__withdraw">
+            <div class="balance-table__line-label">Withdrawal</div>
+            <div class="balance-table__line-value">${{ satellite.withdrawal }}</div>
+        </div>
+        <div class="balance-table__line-cell balance-table__login">
+            <div class="header-login --only-click">
+                <button class="btn loginButton">
+                    {% blocktranslate %}Log in{% endblocktranslate %}
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="modal-wrap" id="loginModal">
+        <div class="modal-bg"></div>
+        <div class="modal-window">
+            <div class="modal-window__inner">
+                <div class="modal-window__title">{% blocktranslate %}Log in{% endblocktranslate %}</div>
+                <form class="modal-window__form" id="login-form" action="satellite/login/" method="POST">
+                    <div class="modal-window__form-error">
+                        {% blocktranslate %}One of the fields is incorrect{% endblocktranslate %}
+                    </div>
+                    {% csrf_token %}
+                    <label class="input">
+                        <input type="text" class="input__field" name="username" placeholder="Username">
+                    </label>
+                    <label class="input">
+                        <input type="password" class="input__field" name="password" placeholder="Password">
+                    </label>
+                    <button type="submit" class="primary-btn">
+                        <span>{% blocktranslate %}Log in{% endblocktranslate %}</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-wrap is-medium" id="banModal">
+        <div class="modal-bg"></div>
+        <div class="modal-window">
+            <div class="modal-window__inner">
+                <div class="modal-window__title" style="text-align: center; margin-bottom: 40px;" id="ban-message">
+                    {% blocktranslate %}Your account has been blocked. Please contact technical support{% endblocktranslate %}
+                </div>
+                <button class="btn" style="width: 100%" id="banModalClose">
+                    <span>{% blocktranslate %}Close{% endblocktranslate %}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const loginForm = $('#login-form')
+    const banModal = $('#banModal')
+    const currentUrl = new URL(location.href)
+
+    $('.loginButton').on('click', function() {
+        $('#loginModal').addClass('show');
+    });
+    $('.modal-bg').on('click', function() {
+        $('.modal-wrap').removeClass('show');
+        $('input[name="username"]').val("")
+        $('input[name="password"]').val("")
+        loginForm.find('.modal-window__form-error').removeClass('show')
+    });
+    $('#banModalClose').on('click', () => banModal.removeClass('show'))
+    const csrf_token = "{{ csrf_token }}"
+    loginForm.submit((e)=> {
+        e.preventDefault();
+        const formData = new FormData(e.target)
+        $.ajax({
+            type: "POST",
+            url: "/es/satellite/login/",
+            data: loginForm.serialize(),
+            headers: { 'X-CSRFToken': csrf_token },
+            success: () => {
+                window.location.href = '/bets/wins/'
+            },
+            error: (e) => {
+                if(e.status == 401){
+                    $('#loginModal').removeClass('show');
+                    $('#ban-message').text(e.responseJSON.message);
+                    banModal.addClass('show');
+                } else {
+                    loginForm.find('.modal-window__form-error').addClass('show')
+                }
+            }
+        })
+    })
+</script>
+{% endblock %}

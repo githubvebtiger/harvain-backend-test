@@ -1,0 +1,46 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [ "dev" ]
+
+concurrency:
+  group: deploy-backend
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add host to known_hosts
+        run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy over SSH
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} '
+            set -euxo pipefail
+            export XDG_RUNTIME_DIR=/run/user/$(id -u)
+            export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+            export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin"
+
+            if [ -x "$HOME/.docker/cli-plugins/docker-compose" ]; then
+              chmod +x "$HOME/.docker/cli-plugins/docker-compose"
+            fi
+
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            git pull
+
+            docker compose -f docker-compose.yml down
+
+            docker compose -f docker-compose.yml build
+
+            docker compose -f docker-compose.yml up -d
+
+            docker compose -f docker-compose.yml ps
+          '

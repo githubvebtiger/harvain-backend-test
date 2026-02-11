@@ -1,0 +1,2 @@
+class RapidException(Exception):
+    pass

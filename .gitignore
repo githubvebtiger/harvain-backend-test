@@ -1,0 +1,8 @@
+.env
+*.log
+google-credentials.json
+*.zip
+.DS_Store
+.idea/
+__pycache__/
+*.pyc

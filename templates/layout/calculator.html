@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load static %}
+
+<div class="calculator">
+    <div class="calculator-header">
+        <div class="calculator-header__item-single">
+            <p class="calculator-header__item-text__single single-text">Single</p>
+        </div>
+        <div class="divider"></div>
+        <div class="calculator-header__item-multi">
+            <p class="calculator-header__item-text__multi multi-text">Multi</p>
+        </div>
+    </div>
+    <div class="calculator-body" id="calc-body">
+        <div class="calculator-body__bets" id="betsTable">
+
+        </div>
+        <div class="calculator-result" id="calc-result">
+            <div class="line">
+                <p>Stake</p>
+                <input class="stake-amount"/>
+            </div>
+            <div class="divider"></div>
+            <div class="line">
+                <p>Possible winnings</p>
+                <p class="amount possible" id="possible-winnings"> USD</p>
+            </div>
+        </div>
+        <button class="primary-btn placeBet" id="placeBet"><span>Place Bet</span></button>
+        <p class="agree calc-agreement" id="calc-agreement">By placing a bet, you automatically accept the most recent version of the <span class="terms">Terms of Use.</span></p>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+{
+  "fixture": {
+    "date": "2022-06-01T23:30:00+00:00",
+    "id": 859461,
+    "periods": {
+      "first": null,
+      "second": null
+    },
+    "referee": null,
+    "status": {
+      "elapsed": null,
+      "long": "Not Started",
+      "short": "NS"
+    },
+    "timestamp": 1654126200,
+    "timezone": "UTC",
+    "venue": {
+      "city": "New York",
+      "id": 3142,
+      "name": "Skidelsky Field at City Park Stadium"
+    }
+  },
+  "goals": {
+    "away": null,
+    "home": null
+  },
+  "league": {
+    "country": "USA",
+    "flag": "https://media.api-sports.io/flags/us.svg",
+    "id": 256,
+    "logo": "https://media.api-sports.io/football/leagues/256.png",
+    "name": "USL League Two",
+    "round": "Regular Season - 15",
+    "season": 2022
+  },
+  "score": {
+    "extratime": {
+      "away": null,
+      "home": null
+    },
+    "fulltime": {
+      "away": null,
+      "home": null
+    },
+    "halftime": {
+      "away": null,
+      "home": null
+    },
+    "penalty": {
+      "away": null,
+      "home": null
+    }
+  },
+  "teams": {
+    "away": {
+      "id": 4062,
+      "logo": "https://media.api-sports.io/football/teams/4062.png",
+      "name": "Long Island Rough Riders",
+      "winner": null
+    },
+    "home": {
+      "id": 4099,
+      "logo": "https://media.api-sports.io/football/teams/4099.png",
+      "name": "Westchester Flames",
+      "winner": null
+    }
+  }
+}

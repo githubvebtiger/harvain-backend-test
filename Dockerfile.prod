@@ -1,0 +1,40 @@
+FROM python:3.8-alpine as builder
+
+WORKDIR /usr/src/app
+
+RUN apk update && apk add python3-dev postgresql-dev gcc musl-dev jpeg-dev zlib-dev g++ gettext
+
+COPY ./requirements.txt .
+
+RUN pip install --upgrade pip wheel setuptools && \
+    pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels gunicorn django-redis==5.2.0 && \
+    pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+
+FROM python:3.8-alpine
+
+RUN addgroup -S django && adduser -S django -G django
+
+RUN mkdir /home/django/web
+RUN mkdir -p /home/django/web/allstaticfiles/static
+RUN mkdir -p /home/django/web/media
+
+WORKDIR /home/django/web
+
+RUN apk update && apk add libpq jpeg-dev zlib-dev musl-dev gcc g++ gettext
+
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+
+RUN pip install --no-cache /wheels/*
+
+COPY ./entrypoint.prod.sh .
+RUN sed -i 's/\r$//g'  /home/django/web/entrypoint.prod.sh
+RUN chmod +x  /home/django/web/entrypoint.prod.sh
+
+COPY . /home/django/web
+RUN chown -R django:django /home/django/web
+
+USER django
+
+ENTRYPOINT ["/home/django/web/entrypoint.prod.sh"]

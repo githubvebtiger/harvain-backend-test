@@ -1,0 +1,16 @@
+<svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_34_3900)">
+<path d="M0 3.5C0 1.84315 1.34315 0.5 3 0.5H18C19.6569 0.5 21 1.84315 21 3.5V12.5C21 14.1569 19.6569 15.5 18 15.5H3C1.34315 15.5 0 14.1569 0 12.5V3.5Z" fill="#1A47B8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.23397 0.5H0V3L18.7539 15.5L21 15.5V13L2.23397 0.5Z" fill="white"/>
+<path d="M0.745098 0.5L21 14.0354V15.5H20.2724L0 1.95056V0.5H0.745098Z" fill="#F93939"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.0001 0.500015H21.0001V3.00002C21.0001 3.00002 8.0099 11.3281 2.00009 15.5H9.15527e-05V13L19.0001 0.500015Z" fill="white"/>
+<path d="M21 0.5H20.3218L0 14.0471V15.5H0.745098L21 1.96151V0.5Z" fill="#F93939"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.63708 0.5H13.3804V5.12682H21V10.8701H13.3804V15.5H7.63708V10.8701H0V5.12682H7.63708V0.5Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.8421 0.5H12.1579V6.26923H21V9.73077H12.1579V15.5H8.8421V9.73077H0V6.26923H8.8421V0.5Z" fill="#F93939"/>
+</g>
+<defs>
+<clipPath id="clip0_34_3900">
+<path d="M0 3.5C0 1.84315 1.34315 0.5 3 0.5H18C19.6569 0.5 21 1.84315 21 3.5V12.5C21 14.1569 19.6569 15.5 18 15.5H3C1.34315 15.5 0 14.1569 0 12.5V3.5Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>

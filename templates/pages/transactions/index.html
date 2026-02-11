@@ -1,0 +1,49 @@
+{% extends 'satellite_base.html' %}
+{% load i18n %}
+{% block content %}
+<div class="wins-table --history">
+    <div class="wins-table__header">
+        <div class="wins-table__header-cell">{% blocktranslate %}Date{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Sum{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Payment System{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Status{% endblocktranslate %}</div>
+        <div class="wins-table__header-cell">{% blocktranslate %}Comment{% endblocktranslate %}</div>
+    </div>
+    {% for transaction in transactions %}
+    <div class="wins-table__line">
+        <div class="wins-table__line-inner">
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Date{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ transaction.created_at|date:'d-m-Y H:i' }}</div>
+            </div>
+            <div class="wins-table__line-cell wins-table__line-sum">
+                <div class="wins-table__line-label">{% blocktranslate %}Sum{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">${{ transaction.amount }}</div>
+            </div>
+            <div class="wins-table__line-cell wins-table__line-payment">
+                <div class="wins-table__line-label">{% blocktranslate %}Payment System{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ transaction.system }}</div>
+            </div>
+            <div class="wins-table__line-cell">
+                <div class="wins-table__line-label">{% blocktranslate %}Status{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">
+                    <span class="{% if transaction.status == 1 %}
+                                    color
+                                {% elif transaction.status == 2 %}
+                                    color-green
+                                {% else %}
+                                    color-red
+                                {% endif %}">
+                        {{ transaction.get_status_display }}
+                    </span>
+                </div>
+            </div>
+            <div class="wins-table__line-cell wins-table__line-comment">
+                <div class="wins-table__line-label">{% blocktranslate %}Comment{% endblocktranslate %}</div>
+                <div class="wins-table__line-value">{{ transaction.comment }}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
